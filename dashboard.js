@@ -67,18 +67,44 @@ var ul = document.getElementById('ul')
 
                 gettingDataFromFireBase()
             })
+
             async function gettingDataFromFireBase() {
                 
                 const querySnapshot = await getDocs(collection(db, "todo"));
                 
                 querySnapshot.forEach((doc) => {
-                    let [dStructure] = doc.data()
-                    ul.innerHTML+=`<li>${dStructure}</li>`
-
-                    // console.log(`${doc.id} => ${doc.data()}`);
-
+                    ul.innerHTML += `
+                    <div class="main2 d-flex mt-3 col-12 id='div'">
+                    <li class='li' id='li'>
+                    ${doc.data().toDo}
+                    </li>
+                    <button class="edit mx-3" id='edit' >Edit</button>
+                    <button class="delete" id='delete'>Delete</button>
+                    </div>
+                    `
+        var li = document.getElementById('li')
+        var edit = document.getElementById('edit')
+        var dlt = document.getElementById('delete')
+        var div = document.getElementById('div')
+        input.value = ''
+        edit.addEventListener('click', () => {
+                var changevalue = prompt('Enter New Value')
+                if (changevalue == '') {
+                        alert('Enter Your ToDo')
+        
+                    } else {
+            
+                        li.innerText = changevalue
+                    }
+        
+                })
+                dlt.addEventListener('click', () => {
+                        div.remove()
+            
+                    })
                 });
             }
+            
             gettingDataFromFireBase()
 
 //impot karrha hu auth ko firebase.js se
